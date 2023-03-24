@@ -1,5 +1,20 @@
-import '@/styles/globals.css'
+import Navbar from "@/Components/Navbar";
+import "@/styles/globals.css";
+import { GetStaticProps } from "next";
+export default function App({ Component, pageProps }, props) {
+  return (
+    <>
+      <Navbar />
+      <Component {...pageProps} />
+    </>
+  );
+}
+export async function getStaticProps() {
+  const data = await import("../data/vocabulary.json");
+  const array = data.vocabulary;
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return {
+    props: { array },
+    revalidate: 20,
+  };
 }
